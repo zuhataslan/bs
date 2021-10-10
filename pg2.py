@@ -108,6 +108,7 @@ class Ship(pg.sprite.DirtySprite):
         # graphical representation of ship object
         # used by pg.sprite.Group() to draw and redraw
         # sprites on display and position at coordinates
+        self.frame = 0
         self.image = load_image(_type.image)
         self.rect = self.image.get_rect()
         self.center = self.rect.center
@@ -118,6 +119,7 @@ class Ship(pg.sprite.DirtySprite):
             self.kill()     # removethe sprite from all groups containing it
         if not ARECT.contains(self.rect):
             self._clamp()
+        self.frame = self.frame + 1     # make it dirty to update each loop
 
     def move(self, Xdir, Ydir):
         """Move ship by offset
@@ -156,6 +158,7 @@ class Ship(pg.sprite.DirtySprite):
                 self.rect = temp.get_rect()
                 self.facing = 1
             self.rect.center = center       # Rotate on center
+            self.frame = self.frame + 1     # Make sprite dirty
             self._clamp()
 
     def _clamp(self):
